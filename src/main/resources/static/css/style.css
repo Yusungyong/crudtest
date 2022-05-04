@@ -1,0 +1,6 @@
+@charset "EUC-KR";
+
+body {
+	margin: 150px;
+}
+tr.member_list:hover{cursor: porinter}
