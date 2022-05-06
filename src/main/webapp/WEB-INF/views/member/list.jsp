@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
@@ -18,6 +18,7 @@
 			url:"/member/delete_ajax",
 			data:params,
 			success:function(mdata){
+				
 				location.reload();
 			},
 			error:function(XMLHttpRequest,textStatus, errorThrown){
@@ -35,6 +36,7 @@
 			dataType:"json",
 			success:function(mdata){
 			      $( document ).ready(function() {
+			    	  
 			    	    $('#member_no').val(mdata.member_no)
 						$('#name').val(" "+mdata.name)
 						$('#address').val(" "+mdata.address)
@@ -48,8 +50,18 @@
 		})
 			  
 		}
+    function loginPopup(){
+        var create = window.open('/member/login_form.do', '로그인', 'width=500, height=400, scrollbars=yes, resizable=no');
+        
+    }
+    function createPopup(){
+        var create = window.open('/member/create_member.do', '회원가입', 'width=500, height=400, scrollbars=yes, resizable=no');
+        
+    }
+
+
 </script>
-<style>
+<style>	
 	td{
 	text-align:center;
 	}
@@ -91,22 +103,22 @@
 
 		</tr>
 		</c:forEach>
-		<tr>
 		<form id="frm_create" method="post" name='new_member' action='/member/new_member.do'>
-		  <td>member_number</td>
-		  <td><input type="text" value="name" required="required" name="member_name"></td>
-		  <td><input type="text" value="address" required="required" name="member_address"></td>
-		  <td><input type="text" value="phone" required="required" name="member_phone"></td>
-		  <td><input type="text" value="email" required="required" name="member_email"></td>
-		  <td><button type="submit">새로운 회원 추가하기</button></td>
+			<tr>
+			  <td>member_number</td>
+			  <td><input type="text" value="name" required="required" name="member_name"></td>
+			  <td><input type="text" value="address" required="required" name="member_address"></td>
+			  <td><input type="text" value="phone" required="required" name="member_phone"></td>
+			  <td><input type="text" value="email" required="required" name="member_email"></td>
+			  <td><button type="submit">새로운 회원 추가하기</button></td>
+		   </tr>
 		</form>
-		</tr>
 		<tr id="tr_number_3">
 		</tr>
 	</tbody>
 </table>
+<c:if test='${sessionScope.id ne null}'>
 	<div class="read_box">
-		
 		<form name="update_form" method="post" action="/member/update_member.do">
 		member_number: <input type="text" value="" id="member_no" name="member_no" readonly><br>
 		member_name:<input type="text" value="" id=name  name="member_name"> <br>
@@ -116,5 +128,15 @@
 		<button type="submit" style="position:relative; left:450px; ">저장</button>
 		</form>
 	</div>
+</c:if>
+<c:if test='${sessionScope.id eq null}'>
+	<div id='create_member'/>
+		<button onclick="createPopup()" target="_blank">회원가입</button>
+	</div>
+	<div id='create_login'/><button onclick="loginPopup()" target="_blank">로그인</button></div>
+</c:if>
+<c:if test='${sessionScope.id ne null}'>
+	<div id='create_login'/><a href="/member/logout.do">로그아웃</a></div>
+</c:if>
 </body>
 </html>

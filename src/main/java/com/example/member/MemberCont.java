@@ -1,7 +1,12 @@
 package com.example.member;
 
+import java.net.http.HttpRequest;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,9 +89,85 @@ public class MemberCont {
 		
 		mav.setViewName("redirect:/member/list.do");
 		return mav;
+	}	
+	
+	
+	
+	/*
+	 * 회원가입 폼 제공
+	 */
+	@RequestMapping(value="/member/create_member.do", method = RequestMethod.GET)
+	public ModelAndView member_create() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/member/create");
+		return mav;
 	}
 	
+	/*
+	 * 회원가입 처리 POST 방식
+	 */
+	@ResponseBody
+	@RequestMapping(value="/member/create.do", method = RequestMethod.POST)
+	public String create(MemberVO memberVO) {
+		
+		JSONObject json = new JSONObject();
+		
+		int cnt = this.memberSVC.new_member(memberVO);
+		json.put("cnt", cnt);
+
+		return json.toString();
+	}	
+	@ResponseBody
+	@RequestMapping(value="/member/login.do",method = RequestMethod.GET)
+	public String login (
+			HttpServletRequest req,
+			HttpServletResponse res,
+			String id, String pwd) {
+		
+		// 파라미터 형식으로 id, pwd 전달받음
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		HttpSession session = req.getSession();
+		
+		JSONObject json = new JSONObject();
+		
+		
+		map.put("id", id);
+		map.put("pwd", pwd);
+		
+		
+		int cnt = this.memberSVC.login(map);
+
+		json.put("id", id);
+		json.put("pwd", pwd);
+		json.put("cnt", cnt);
+		if (cnt == 0) { //로그인 실패
+			session.setAttribute("pwd", null);
+			session.setAttribute("id", null);
+			System.out.println("실패!");
+		} else {
+			session.setAttribute("pwd", pwd);
+			session.setAttribute("id", id);
+			System.out.println("성공!");
+		}
+		
+		return json.toString();
+	}
 	
+	@RequestMapping(value="/member/login_form.do", method = RequestMethod.GET)
+	public ModelAndView login_form() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/member/login");
+		return mav;
+	}
 	
-	
+	@RequestMapping(value="/member/logout.do", method = RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView();
+		
+		req.getSession().setAttribute("id", null);
+		req.getSession().invalidate();
+		  mav.setViewName("redirect:/member/list.do");
+		  return mav;
+		}
 }

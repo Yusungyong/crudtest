@@ -1,5 +1,6 @@
 package com.example.member;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,12 @@ public class MemberSVC  implements MemberSVCInter{
 	public MemberVO read(int member_no) {
 		MemberVO memberVO = this.MemberDAO.read(member_no);
 		return memberVO;
+	}
+
+	@Override
+	public int login(HashMap<String, Object> map) {
+		int cnt = this.MemberDAO.login(map);
+		return cnt;
 	}
 	
 }

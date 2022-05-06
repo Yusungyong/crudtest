@@ -1,5 +1,6 @@
 package com.example.member;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -20,5 +21,7 @@ public interface MemberSVCInter {
 	public int update_member(MemberVO memberVO);
 	
 	public MemberVO read(int member_no);
+	
+	public int login(HashMap<String, Object> map);
 	
 }

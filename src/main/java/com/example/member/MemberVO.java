@@ -7,6 +7,8 @@ public class MemberVO {
 	private	String member_address;
 	private String member_phone;
 	private String member_email;
+	private String id;
+	private String pwd;
 	public int getMember_no() {
 		return member_no;
 	}
@@ -37,10 +39,18 @@ public class MemberVO {
 	public void setMember_email(String member_email) {
 		this.member_email = member_email;
 	}
-	@Override
-	public String toString() {
-		return "MemberVO [member_no=" + member_no + ", member_name=" + member_name + ", member_address="
-				+ member_address + ", member_phone=" + member_phone + ", member_email=" + member_email + "]";
+	public String getId() {
+		return id;
 	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
 	
 }

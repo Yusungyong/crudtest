@@ -39,4 +39,10 @@
 		WHERE member_no = #{member_no}	
 	</select>
 	
+	<select id="login" resultType="int" parameterType="HashMap">
+		SELECT COUNT(*) as cnt
+		FROM member
+		WHERE id = #{id} AND pwd = #{pwd}
+	</select>
+	
 </mapper>
