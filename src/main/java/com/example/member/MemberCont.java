@@ -1,6 +1,6 @@
 package com.example.member;
 
-import java.net.http.HttpRequest;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class MemberCont {
 	@RequestMapping(value="/member/list.do", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();
-		List<MemberVO> list = this.memberSVC.list();   // this.MemberSVC.list();·Î º¯°æ ÇÊ¿äÇÔ
+		List<MemberVO> list = this.memberSVC.list();   // this.MemberSVC.list();ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½
 		
 		mav.addObject("list", list);
 		mav.setViewName("/member/list");
@@ -94,7 +94,7 @@ public class MemberCont {
 	
 	
 	/*
-	 * È¸¿ø°¡ÀÔ Æû Á¦°ø
+	 * È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping(value="/member/create_member.do", method = RequestMethod.GET)
 	public ModelAndView member_create() {
@@ -104,7 +104,7 @@ public class MemberCont {
 	}
 	
 	/*
-	 * È¸¿ø°¡ÀÔ Ã³¸® POST ¹æ½Ä
+	 * È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ POST ï¿½ï¿½ï¿½
 	 */
 	@ResponseBody
 	@RequestMapping(value="/member/create.do", method = RequestMethod.POST)
@@ -124,7 +124,7 @@ public class MemberCont {
 			HttpServletResponse res,
 			String id, String pwd) {
 		
-		// ÆÄ¶ó¹ÌÅÍ Çü½ÄÀ¸·Î id, pwd Àü´Þ¹ÞÀ½
+		// ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ id, pwd ï¿½ï¿½ï¿½Þ¹ï¿½ï¿½ï¿½
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		HttpSession session = req.getSession();
@@ -141,14 +141,14 @@ public class MemberCont {
 		json.put("id", id);
 		json.put("pwd", pwd);
 		json.put("cnt", cnt);
-		if (cnt == 0) { //·Î±×ÀÎ ½ÇÆÐ
+		if (cnt == 0) { //ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			session.setAttribute("pwd", null);
 			session.setAttribute("id", null);
-			System.out.println("½ÇÆÐ!");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½!");
 		} else {
 			session.setAttribute("pwd", pwd);
 			session.setAttribute("id", id);
-			System.out.println("¼º°ø!");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½!");
 		}
 		
 		return json.toString();

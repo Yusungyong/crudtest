@@ -18,8 +18,8 @@
 	
 	<!-- 신규 회원 추가 -->
 	<insert id="new_member" parameterType="com.example.member.MemberVO">
-		INSERT INTO member(member_no, member_name, member_address, member_phone, member_email)
-		VALUES(member_seq.nextval, #{member_name}, #{member_address}, #{member_phone}, #{member_email})
+		INSERT INTO member(member_no, member_name, member_address, member_phone, member_email, id, pwd)
+		VALUES(member_seq.nextval, #{member_name}, #{member_address}, #{member_phone}, #{member_email}, #{id}, #{pwd})
 	</insert>
 	
 	<!-- 회원 수정 -->

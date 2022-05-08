@@ -41,8 +41,10 @@ function loginSubmit(){
 <body>
 <h1>로그인</h1><br>
  <form id='frmm' name='frm' action='login.do' method='get'>
-<input type="text" value="아이디" required="required" name="id" id="id"><br>
-<input type="text" value="비밀번호" required="required" name="pwd" id="pwd"><br>
+ <label>아이디</label>
+<input type="text" value="" required="required" name="id" id="id"><br>
+<label>비밀번호</label>
+<input type="password" value="" required="required" name="pwd" id="pwd"><br>
 <button type='button' onclick='loginSubmit(); return false;'>로그인</button>
 </form>
 </body>

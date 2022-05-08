@@ -10,21 +10,28 @@
 <title>Insert title here</title>
 </head>
 <script type="text/javascript">
-	function delete_member (member_no){ // member 삭제 기능, 삭제버튼 클릭시 경고창 없이 바로 삭제됨.
-		const params = "member_no=" + member_no
-		console.log(member_no)
-		$.ajax({
-			type:"POST",
-			url:"/member/delete_ajax",
-			data:params,
-			success:function(mdata){
-				
-				location.reload();
-			},
-			error:function(XMLHttpRequest,textStatus, errorThrown){
-				alert("통신실패")
-			}
-		})
+	function delete_member (member_no, session_id){ // member 삭제 기능, 삭제버튼 클릭시 경고창 없이 바로 삭제됨.
+		if (session_id == null){
+			alert("권한이 없습니다.")
+			return false
+		}
+		else{
+			const params = "member_no=" + member_no
+			console.log(member_no)
+			$.ajax({
+				type:"POST",
+				url:"/member/delete_ajax",
+				data:params,
+				success:function(mdata){
+					alert("회원삭제 완료되었습니다.")
+					location.reload();
+				},
+				error:function(XMLHttpRequest,textStatus, errorThrown){
+					alert("통신실패")
+				}
+			})
+		}
+
 		
 	}
 	function show_text(member_no) {
@@ -55,7 +62,7 @@
         
     }
     function createPopup(){
-        var create = window.open('/member/create_member.do', '회원가입', 'width=500, height=400, scrollbars=yes, resizable=no');
+        var create = window.open('/member/create_member.do', '회원가입', 'width=700, height=1000, scrollbars=yes, resizable=no');
         
     }
 
@@ -97,8 +104,8 @@
 		  <td>${memberVO.member_address }</td>
 		  <td>${memberVO.member_phone }</td>
 		  <td>${memberVO.member_email }</td>
-		  <td><button onclick="delete_member(${memberVO.member_no})"> 삭제</button>
-		  	  <button onclick="show_text(${memberVO.member_no})">수정</button>
+		  <td><button onclick="delete_member(${memberVO.member_no}, '${sessionScope.id }')"> 삭제</button>
+		  	  <button onclick="show_text(${memberVO.member_no}, '${sessionScope.id }')">수정</button>
 		   </td>
 
 		</tr>

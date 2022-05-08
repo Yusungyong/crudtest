@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	hello~
+	<a href="/member/list.do">hello~</a>
 </body>
 </html>
