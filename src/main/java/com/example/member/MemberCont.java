@@ -1,6 +1,7 @@
 package com.example.member;
 
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class MemberCont {
 	@RequestMapping(value="/member/list.do", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();
-		List<MemberVO> list = this.memberSVC.list();   // this.MemberSVC.list();�� ���� �ʿ���
+		List<MemberVO> list = this.memberSVC.list();   // this.MemberSVC.list();占쏙옙 占쏙옙占쏙옙 占십울옙占쏙옙
 		
 		mav.addObject("list", list);
 		mav.setViewName("/member/list");
@@ -94,7 +95,7 @@ public class MemberCont {
 	
 	
 	/*
-	 * ȸ������ �� ����
+	 * 회占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙
 	 */
 	@RequestMapping(value="/member/create_member.do", method = RequestMethod.GET)
 	public ModelAndView member_create() {
@@ -104,18 +105,22 @@ public class MemberCont {
 	}
 	
 	/*
-	 * ȸ������ ó�� POST ���
+	 * 회占쏙옙占쏙옙占쏙옙 처占쏙옙 POST 占쏙옙占�
 	 */
-	@ResponseBody
+	
 	@RequestMapping(value="/member/create.do", method = RequestMethod.POST)
-	public String create(MemberVO memberVO) {
+	public ModelAndView create(MemberVO memberVO, HttpServletResponse response) throws IOException {
+		ModelAndView mav = new ModelAndView();		
+		int cnt = this.memberSVC.new_member(memberVO );
 		
-		JSONObject json = new JSONObject();
-		
-		int cnt = this.memberSVC.new_member(memberVO);
-		json.put("cnt", cnt);
+		mav.addObject("cnt", cnt);
+		if (cnt == 1) {
+			mav.setViewName("redirect:/member/list.do"); // 회원가입 성공시 메세지 페이지로
+		} else {
+			ScriptUtils.alert(response,"가입 실패"); // 가입실패시 팝업창만 띄운뒤 페이지 유지 
+		}
 
-		return json.toString();
+		return mav;
 	}	
 	@ResponseBody
 	@RequestMapping(value="/member/login.do",method = RequestMethod.GET)
@@ -124,7 +129,7 @@ public class MemberCont {
 			HttpServletResponse res,
 			String id, String pwd) {
 		
-		// �Ķ���� �������� id, pwd ���޹���
+		// 占식띰옙占쏙옙占� 占쏙옙占쏙옙占쏙옙占쏙옙 id, pwd 占쏙옙占쌨뱄옙占쏙옙
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		HttpSession session = req.getSession();
@@ -141,14 +146,14 @@ public class MemberCont {
 		json.put("id", id);
 		json.put("pwd", pwd);
 		json.put("cnt", cnt);
-		if (cnt == 0) { //�α��� ����
+		if (cnt == 0) { //占싸깍옙占쏙옙 占쏙옙占쏙옙
 			session.setAttribute("pwd", null);
 			session.setAttribute("id", null);
-			System.out.println("����!");
+
 		} else {
 			session.setAttribute("pwd", pwd);
 			session.setAttribute("id", id);
-			System.out.println("����!");
+
 		}
 		
 		return json.toString();

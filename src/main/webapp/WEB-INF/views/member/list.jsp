@@ -11,8 +11,8 @@
 </head>
 <script type="text/javascript">
 	function delete_member (member_no, session_id){ // member 삭제 기능, 삭제버튼 클릭시 경고창 없이 바로 삭제됨.
-		if (session_id == null){
-			alert("권한이 없습니다.")
+		if (session_id == ""){
+			alert("권한이 없습니다. 로그인 후 진행해주십시오")
 			return false
 		}
 		else{
@@ -34,27 +34,34 @@
 
 		
 	}
-	function show_text(member_no) {
-		const params ="member_no=" + member_no
-		$.ajax({
-			type:"GET",
-			url:"/member/update_form.do",
-			data:params,
-			dataType:"json",
-			success:function(mdata){
-			      $( document ).ready(function() {
-			    	  
-			    	    $('#member_no').val(mdata.member_no)
-						$('#name').val(" "+mdata.name)
-						$('#address').val(" "+mdata.address)
-						$('#phone').val(" "+mdata.phone)
-						$('#email').val(" "+mdata.email)
-			        } );
-			},
-			error:function(XMLHttpRequest,textStatus, errorThrown){
-				alert("통신실패")
-			}
-		})
+	function show_text(member_no, session_id) {
+		
+		if (session_id == ""){
+			alert("권한이 없습니다. 로그인 후 진행해주십시오")
+			return false
+		}
+		else{
+			const params ="member_no=" + member_no
+			$.ajax({
+				type:"GET",
+				url:"/member/update_form.do",
+				data:params,
+				dataType:"json",
+				success:function(mdata){
+				      $( document ).ready(function() {
+				    	  
+				    	    $('#member_no').val(mdata.member_no)
+							$('#name').val(" "+mdata.name)
+							$('#address').val(" "+mdata.address)
+							$('#phone').val(" "+mdata.phone)
+							$('#email').val(" "+mdata.email)
+				        } );
+				},
+				error:function(XMLHttpRequest,textStatus, errorThrown){
+					alert("통신실패")
+				}
+			})
+		}
 			  
 		}
     function loginPopup(){
