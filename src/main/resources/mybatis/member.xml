@@ -22,6 +22,12 @@
 		VALUES(member_seq.nextval, #{member_name}, #{member_address}, #{member_phone}, #{member_email}, #{id}, #{pwd})
 	</insert>
 	
+	<!-- 신규 회원 추가 관리자 -->
+	<insert id="new_member_ad" parameterType="com.example.member.MemberVO">
+		INSERT INTO member(member_no, member_name, member_address, member_phone, member_email)
+		VALUES(member_seq.nextval, #{member_name}, #{member_address}, #{member_phone}, #{member_email})
+	</insert>
+	
 	<!-- 회원 수정 -->
 	<update id="update_member" parameterType="com.example.member.MemberVO">
 		UPDATE member
@@ -43,6 +49,12 @@
 		SELECT COUNT(*) as cnt
 		FROM member
 		WHERE id = #{id} AND pwd = #{pwd}
+	</select>
+	
+	<select id="CheckId" parameterType="String" resultType="int">
+		SELECT COUNT(*) as cnt
+		FROM member
+		WHERE id = #{id} <!-- 일치하는 아이디가 있다면 cnt= 1 없다면 0 -->
 	</select>
 	
 </mapper>

@@ -10,9 +10,14 @@ public interface MemberDAOInter {
 	
 	public int new_member(MemberVO memberVO);
 	
+	public int new_member_ad(MemberVO memberVO);
+	
 	public int update_member(MemberVO memberVO);
 	
 	public MemberVO read(int member_no);
 	
 	public int login(HashMap<String, Object> map);
+	
+	public int CheckId(String id);
+	
 }

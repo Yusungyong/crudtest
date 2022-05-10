@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,8 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MemberCont {
+	private static Logger log = LoggerFactory.getLogger(MemberCont.class);
 	
-	private static final String MemberVO = null;
+	
 	@Autowired
 	@Qualifier("com.example.member.MemberSVC")
 	private MemberSVCInter memberSVC;
@@ -42,6 +45,20 @@ public class MemberCont {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/member/CheckId.do", method = RequestMethod.GET)
+	public String CheckId(String id) {
+		JSONObject json = new JSONObject();
+		log.info("CheckId = " + id);
+		int cnt = this.memberSVC.CheckId(id);
+		json.put("cnt", cnt);
+		
+		return json.toString();
+		
+	}
+	
+	
+	
+	@ResponseBody
 	@RequestMapping(value="/member/delete_ajax", method=RequestMethod.POST)
 	public String delete_member(int member_no) {
 		JSONObject json = new JSONObject();
@@ -56,7 +73,7 @@ public class MemberCont {
 	public ModelAndView new_member(MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
 		
-		int cnt = this.memberSVC.new_member(memberVO);
+		int cnt = this.memberSVC.new_member_ad(memberVO);
 		mav.addObject("cnt", cnt);
 		
 		

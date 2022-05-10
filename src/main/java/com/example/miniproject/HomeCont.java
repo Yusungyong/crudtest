@@ -16,7 +16,7 @@ public class HomeCont {
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView welcome_page() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("hello");
+		mav.setViewName("index");
 		return mav;
 	}
 }

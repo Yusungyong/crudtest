@@ -19,7 +19,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties") 
-@MapperScan(basePackages= {"com.example.miniproject","com.example.member"})
+@MapperScan(basePackages= {"com.example.miniproject","com.example.member","com.example.board"})
 public class DatabaseConfig {
     
     @Autowired

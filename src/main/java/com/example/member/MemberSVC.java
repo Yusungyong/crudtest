@@ -33,6 +33,12 @@ public class MemberSVC  implements MemberSVCInter{
 		int cnt = this.MemberDAO.new_member(memberVO);
 		return cnt;
 	}
+	
+	@Override
+	public int new_member_ad(MemberVO memberVO) {
+		int cnt = this.MemberDAO.new_member_ad(memberVO);
+		return cnt;
+	}
 
 	@Override
 	public int update_member(MemberVO memberVO) {
@@ -49,6 +55,12 @@ public class MemberSVC  implements MemberSVCInter{
 	@Override
 	public int login(HashMap<String, Object> map) {
 		int cnt = this.MemberDAO.login(map);
+		return cnt;
+	}
+
+	@Override
+	public int CheckId(String id) {
+		int cnt = this.MemberDAO.CheckId(id);
 		return cnt;
 	}
 	

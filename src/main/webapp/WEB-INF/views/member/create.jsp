@@ -12,7 +12,50 @@
 <title>회원가입 화면 샘플 - Bootstrap</title> 
 <script type="text/javascript">
 
-function createSubmit(){
+function CheckId(){
+	var params = "id="+$('#id').val();
+	// console.log(params);
+	
+	$.ajax({
+		dataType:'json',
+		url:'/member/CheckId.do',
+		Type:'get',
+		data:params,
+		success:function(cnt){
+			//alert(cnt.cnt)
+			if($('#id').val().length <= 5){
+				alert("최소 다섯글자 이상이여야 합니다.")
+				return false;
+			}
+				if (cnt.cnt == 1){
+					alert("이미 사용중인 아이디 입니다.")
+				}else{
+					alert("사용 가능한 아이디 입니다.")
+				}
+
+		},
+		error:function(XMLHttpRequest,textStatus, errorThrown){
+			alert("통신실패")
+		}
+		
+		
+	})
+}
+
+function CheckPwd(){
+	pwd1 = $('#pwd1').val()
+	pwd2 = $('#pwd2').val()
+	console.log(pwd2.length)
+	if (pwd2.length < 1){
+		$('#Checkpwd').html("")
+	}
+	if (pwd1 === pwd2){
+		$('#Checkpwd').html("비밀번호가 일치합니다.")
+	}
+	else {
+		$('#Checkpwd').html("비밀번호가 일치하지 않습니다.")
+	}
+}
 
 </script>
 <style>
@@ -49,15 +92,21 @@ padding: 32px;
 			    </div> 
 			  </div> 
 			  <div class="col-md-6 mb-3"> 
-				<label for="id">아이디</label> 
+				<label for="id">아이디</label> <button onclick="CheckId()" type="button" class="btn btn-primary btn-lg btn-block" style="width:150px;">중복 확인</button>
 				<input type="text" class="form-control" id="id" name="id" placeholder="" value="" required> 
-			    <div class="invalid-feedback"> 이름을 입력해주세요. 
+			    <div class="invalid-feedback"> 아이디을 입력해주세요. 
 			    </div> 
 			  </div> 
 			  <div class="col-md-6 mb-3"> 
-				<label for="pwd">패스워드</label> 
-				<input type="password" class="form-control" id="pwd" name="pwd" placeholder="" value="" required> 
-				<div class="invalid-feedback"> 별명을 입력해주세요. 
+				<label for="pwd1">비밀번호</label> 
+				<input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="" value="" required> 
+				<div class="invalid-feedback"> 비밀번호를 입력해주세요. 
+				</div> 
+			  </div> 
+			  <div class="col-md-6 mb-3"> 
+				<label for="pwd2">비밀번호 확인</label> 
+				<input type="password" class="form-control" onkeyup="CheckPwd()" id="pwd2" name="pwd2" placeholder="" value="" required> 
+				<div id='Checkpwd'>
 				</div> 
 			  </div> 
 			</div> 
